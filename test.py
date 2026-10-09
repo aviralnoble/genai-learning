@@ -2,17 +2,21 @@ import anthropic
 
 client = anthropic.Anthropic()
 
-message = client.messages.create(
-    model="claude-opus-5-5",
+# Take prompt input from the user
+user_prompt = input("Enter your prompt: ")
+
+# Send the prompt to Claude
+response = client.messages.create(
+    model="claude-sonnet-5",
     max_tokens=1000,
     messages=[
-        {
-            "role": "user",
-            "content": "What should I search for to find the latest developments in renewable energy?",
-        }
+        {"role": "user", "content": user_prompt}
     ],
 )
 
-for block in message.content:
+# Print the output clearly labeled
+print("\n" + "=" * 20 + " RESPONSE " + "=" * 20)
+for block in response.content:
     if block.type == "text":
         print(block.text)
+print("=" * 48)
