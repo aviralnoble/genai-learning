@@ -1,0 +1,3 @@
+Convert the following ticket into JSON containing ticket_id, category, urgency, summary, and action_items.
+
+{{ticket_input}}

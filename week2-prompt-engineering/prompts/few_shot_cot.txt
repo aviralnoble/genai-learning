@@ -1,0 +1,24 @@
+Extract operational incident metadata into strict JSON format matching the schema demonstrated in the example.
+
+<example>
+Input:
+SERVICE: redis-cache-01
+STATUS: OUT_OF_MEMORY
+TIMESTAMP: 2026-10-10T08:00:00Z
+PAYLOAD: Node evicted 40,000 keys. Memory usage at 99%. Session tokens dropping.
+
+Output:
+{
+  "ticket_id": "UNKNOWN",
+  "category": "Technical",
+  "urgency": "HIGH",
+  "summary": "Redis cache node memory saturation causing key evictions and session loss.",
+  "action_items": ["Flush expired cache keys", "Scale cluster memory allocation", "Inspect session TTL policy"]
+}
+</example>
+
+<ticket_data>
+{{ticket_input}}
+</ticket_data>
+
+Output valid JSON only:
