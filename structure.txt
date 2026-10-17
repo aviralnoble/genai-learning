@@ -1,0 +1,6 @@
+week03-vector-search/
+├── data/
+│   └── mft_runbooks.json
+├── main.py
+├── requirements.txt
+└── README.md
