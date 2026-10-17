@@ -1,0 +1,86 @@
+[
+  {
+    "id": "MFT-001",
+    "protocol": "SFTP",
+    "title": "SFTP Host Key Fingerprint Mismatch",
+    "content": "Inbound or outbound SFTP connection fails during SSH handshake with host key verification failed. Cause: The remote trading partner replaced or rotated their server public key without prior notice. Fix: Verify the fingerprint with the partner out-of-band, clear the obsolete key from the known_hosts cache, and import the new public host key.",
+    "category": "Authentication"
+  },
+  {
+    "id": "MFT-002",
+    "protocol": "AS2",
+    "title": "AS2 MIC (Message Integrity Check) Mismatch",
+    "content": "Asynchronous or synchronous MDN returns negative status with error 'integrity-check-failed'. Cause: The calculated digest of the received payload does not match the MIC sent in the signed MDN. Typically caused by transport-level encoding changes, trailing whitespace truncation, or intermediate proxy payload corruption. Fix: Ensure binary transfer mode is enforced and verify matching SHA-256 digest algorithms between trading partners.",
+    "category": "Integrity"
+  },
+  {
+    "id": "MFT-003",
+    "protocol": "PGP",
+    "title": "PGP Decryption Secret Key Missing or Expired",
+    "content": "Automated decryption pipeline fails with 'decryption failed: secret key not available' or 'subpacket key expired'. Cause: The file was encrypted using an outdated public key or the corresponding private key on the local keyring has expired. Fix: Inspect the recipient key ID embedded in the encrypted packet, verify local keyring validity, and renew or import the valid private key.",
+    "category": "Cryptography"
+  },
+  {
+    "id": "MFT-004",
+    "protocol": "FILESYSTEM",
+    "title": "Zero-Byte File Transfer Quarantine",
+    "content": "File arrived at target pickup directory with size 0 KB (empty payload), triggering downstream batch ingestion parser crashes. Cause: Network drop during initial TCP connection or remote script created an empty staging file before writing content. Fix: Configure MFT polling adapter to reject zero-byte transfers, quarantine the event, and alert the trading partner to verify upstream file generation.",
+    "category": "Data Quality"
+  },
+  {
+    "id": "MFT-005",
+    "protocol": "FILESYSTEM",
+    "title": "Partial Ingestion Due to File Locking / Premature Polling",
+    "content": "Downstream parser reads an incomplete payload or throws EOFException because the MFT engine picked up the file while the upstream partner was still actively writing to the directory. Fix: Enforce the temporary-file-rename convention (.filepart, .tmp) until write completion, or set a minimum file stability quiet period (e.g., file age >= 60 seconds without size change) before polling.",
+    "category": "Concurrency"
+  },
+  {
+    "id": "MFT-006",
+    "protocol": "AS2",
+    "title": "AS2 Async MDN Delivery HTTP 504 Gateway Timeout",
+    "content": "AS2 transfer succeeds on inbound payload receipt, but the subsequent asynchronous MDN delivery fails with HTTP 504 or connection timed out when attempting to POST to the partner's receipt URL. Cause: Partner firewall blocking reverse connection or outbound proxy blocking MDN return port. Fix: Verify network routing to partner MDN URL, check outbound proxy rules, or switch to synchronous MDN mode if partner permits.",
+    "category": "Network"
+  },
+  {
+    "id": "MFT-007",
+    "protocol": "SFTP",
+    "title": "User Account Locked - Too Many Failed Auth Attempts",
+    "content": "Automated partner batch script fails with 'Permission denied (publickey,password)'. Cause: Partner automated script submitted bad credentials repeatedly, triggering the local MFT brute-force defense lockout rule. Fix: Unlock the service account in the MFT administrative console, reset the credential threshold, and coordinate with the partner team to verify credential synchronization.",
+    "category": "Authentication"
+  },
+  {
+    "id": "MFT-008",
+    "protocol": "STORAGE",
+    "title": "Local Staging Directory Disk Space Saturation",
+    "content": "All inbound transfers fail across SFTP, AS2, and FTPS with 'No space left on device' or 'Disk quota exceeded'. Cause: Unpurged archival directories, stuck failed queues, or debug tracing logs filling the local volume. Fix: Execute purge script on archived payloads older than retention policy (e.g., >30 days), compress old system logs, and increase disk capacity on the /var/mft/staging mount.",
+    "category": "Infrastructure"
+  },
+  {
+    "id": "MFT-009",
+    "protocol": "TLS",
+    "title": "SSL/TLS Handshake Cipher Suite Mismatch",
+    "content": "Connection fails immediately during TLS negotiation with 'handshake_failure' or 'no shared cipher suites'. Cause: Client only supports legacy TLS 1.0/1.1 or obsolete CBC ciphers disabled on the gateway due to security hardening. Fix: Advise the partner to upgrade their client to TLS 1.2/1.3 and enable standard elliptic-curve / AES-GCM cipher suites.",
+    "category": "Security"
+  },
+  {
+    "id": "MFT-010",
+    "protocol": "AS2",
+    "title": "AS2 Digital Signature Certificate Expiration",
+    "content": "Inbound AS2 transmission fails during signature verification with 'Certificate expired' or 'Untrusted root CA'. Cause: Partner's public signing X.509 certificate expired. Fix: Request the partner's updated X.509 certificate (.cer/.pem), verify the certificate chain up to a trusted CA, and update the partner profile in the AS2 gateway certificate store.",
+    "category": "Security"
+  },
+  {
+    "id": "MFT-011",
+    "protocol": "CONNECT:DIRECT",
+    "title": "Connect:Direct Transmission Node Outage (XCOM / CD)",
+    "content": "Outbound batch transfer to partner mainframe fails with 'XPCH012I Session failed to start: Node unreachable'. Cause: Connect:Direct remote service listener is stopped, firewall port 1364 is blocked, or netmap configuration contains an invalid IP address. Fix: Ping the remote node IP, verify port 1364 connectivity via telnet/nc, and check netmap entry configuration.",
+    "category": "Network"
+  },
+  {
+    "id": "MFT-012",
+    "protocol": "API/WEBHOOK",
+    "title": "MFT Post-Transfer Webhook Notification Failure",
+    "content": "Transfer finishes successfully, but downstream ERP trigger fails because the MFT post-transfer webhook call received HTTP 500 Internal Server Error. Cause: Downstream REST endpoint service is offline or received malformed JSON payload metadata. Fix: Check the downstream service health, verify webhook payload schema, and replay the event from the MFT event queue.",
+    "category": "Integration"
+  }
+]
