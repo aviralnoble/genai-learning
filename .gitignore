@@ -3,4 +3,6 @@
 __pycache__/
 *.pyc
 .env
+structure.txt
 week03-vector-search/chroma_data/
+week04-langchain-retriever/chroma_db/
