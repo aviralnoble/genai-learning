@@ -97,7 +97,7 @@ def init_vectorstore(
     collection_name: str = "mft_runbooks_langchain"
 ) -> Chroma:
     """Initializes Chroma vectorstore with local FastEmbed and ensures idempotent ingestion."""
-    persist_dir = str(base_dir / "chroma_db")
+    persist_dir = str(base_dir / "week04-langchain-retriever" / "chroma_db")
     data_file = base_dir / "week03-vector-search" / "data" / "mft_runbooks.json"
 
     # FastEmbed uses local ONNX all-MiniLM-L6-v2 (384 dimensions)

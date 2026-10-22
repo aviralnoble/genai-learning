@@ -1,9 +1,0 @@
-week04-langchain-retriever/
-├── data/
-│   └── mft_runbooks.json
-├── chroma_db/
-├── src/
-│   ├── __init__.py
-│   ├── vector_search.py
-│   └── langchain_mft_rag.py
-└── README.md                      
