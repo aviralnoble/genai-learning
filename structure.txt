@@ -1,6 +1,9 @@
-week03-vector-search/
+week04-langchain-retriever/
 ├── data/
 │   └── mft_runbooks.json
-├── main.py
-├── requirements.txt
-└── README.md
+├── chroma_db/
+├── src/
+│   ├── __init__.py
+│   ├── vector_search.py
+│   └── langchain_mft_rag.py
+└── README.md                      
