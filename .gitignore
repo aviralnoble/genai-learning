@@ -5,4 +5,7 @@ __pycache__/
 .env
 structure.txt
 week03-vector-search/chroma_data/
-week04-langchain-retriever/chroma_db/
+*/chroma_db/
+week05_rag/*/__init__.py
+week05_rag/*/*/__init__.py
+week05_rag/data/
