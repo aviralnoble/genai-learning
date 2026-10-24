@@ -1,0 +1,14 @@
+rag:
+  # Chunk size evaluation: 256 (high precision), 512 (balanced), 1024 (broad context)
+  chunk_size: 512
+  chunk_overlap: 64
+  k_retrieval: 2
+  mmr_lambda: 0.4
+  chroma_db_dir: "./chroma_db"
+  collection_name: "mft_edi_knowledge_base"
+  data_dir: "./data"
+
+llm:
+  model_id: "claude-sonnet-5-5"
+  max_tokens: 4096
+  thinking_budget_tokens: 1024
